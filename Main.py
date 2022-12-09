@@ -35,7 +35,7 @@ if __name__ == "__main__":
     for p in db.get_publish_queue():
         post = tg.get_message_by_id(id=p['pid'])
         print(post)
-        print(post['message'])
+        print(post.message)
         if post.file:
 
             filename_ = 'msgfile' + post.file.ext
