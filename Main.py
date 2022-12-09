@@ -40,13 +40,13 @@ if __name__ == "__main__":
 
             filename_ = 'msgfile' + post.file.ext
             post.download_media(file=filename_)
-            r = send_file(post.text, filename_)
+            r = send_file(post.message, filename_)
             if r['ok'] == True:
                 db.set_published(post.id, r['result']['message_id'])
                 if os.path.exists(filename_):
                     os.remove(filename_)
         else:
-            r = send_message(post.text)
+            r = send_message(post.message)
             if r['ok'] == True:
                 db.set_published(post.id, r['result']['message_id'])
 
