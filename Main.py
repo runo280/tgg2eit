@@ -40,7 +40,9 @@ if __name__ == "__main__":
             print('has file')
             filename_ = 'msgfile' + post.file.ext
             post.download_media(file=filename_)
-            text = """{txt}""".format(txt = post.message)
+            text = """{txt}""".format(txt = post.message).encode('ascii', 'ignore')
+            print("\n\n\n")
+            print(text)
             r = send_file(text, filename_)
             print(r)
             if r['ok'] == True:
