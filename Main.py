@@ -40,7 +40,8 @@ if __name__ == "__main__":
             print('has file')
             filename_ = 'msgfile' + post.file.ext
             post.download_media(file=filename_)
-            r = send_file(post.message, filename_)
+            text = """{txt}""".format(txt = post.message)
+            r = send_file(text, filename_)
             print(r)
             if r['ok'] == True:
                 db.set_published(post.id, r['result']['message_id'])
@@ -48,7 +49,8 @@ if __name__ == "__main__":
                     os.remove(filename_)
         else:
             print('no file')
-            r = send_message(post.message)
+            text = """{txt}""".format(txt = post.message)
+            r = send_message(text)
             print(r)
             if r['ok'] == True:
                 db.set_published(post.id, r['result']['message_id'])
