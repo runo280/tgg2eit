@@ -40,7 +40,7 @@ if __name__ == "__main__":
             print('has file')
             filename_ = 'msgfile' + post.file.ext
             post.download_media(file=filename_)
-            text = """{txt}""".format(txt = post.message.replace('\u200c', ''))
+            text = """{txt}""".format(txt = post.message.replace('\u200c', '').replace(u'\xa0', u' '))
             print("\n\n\n")
             print(text)
             r = send_file(text, filename_)
