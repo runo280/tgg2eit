@@ -1,9 +1,10 @@
+# -*- coding: utf-8 -*-
 from telethon.errors import SessionPasswordNeededError
 from telethon.sync import TelegramClient
-from telethon.tl import functions as f
 from telethon.tl.functions.messages import GetDialogsRequest
 from telethon.tl.types import InputPeerEmpty
-from telethon.tl.types import PeerChannel
+
+import mutil
 from env import *
 
 
@@ -23,9 +24,11 @@ class MyTelegram:
         self._phone_number = phone
         self._password = password
 
-        # self._client = TelegramClient(self._name, self._api_id, self._api_hash, proxy=(
-            # "socks5", '192.168.1.101', 1086))
-        self._client = TelegramClient(self._name, self._api_id, self._api_hash)
+        if mutil.is_offline():
+            self._client = TelegramClient(self._name, self._api_id, self._api_hash, proxy=("socks5", '127.0.0.1', 10808))
+        else:
+            self._client = TelegramClient(self._name, self._api_id, self._api_hash)
+
         self._client.connect()
 
         if not self._client.is_user_authorized():

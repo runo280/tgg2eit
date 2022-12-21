@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-import os
 import pymongo
 from env import *
 
@@ -13,9 +12,9 @@ database = client[db_name]
 posts = database[db_posts]
 
 
-def update_session(id, base):
+def update_session(_id, base):
     set_published_query = {'$set': {'session': base}}
-    database[db_date].update_one({'_id': id}, set_published_query)
+    database[db_date].update_one({'_id': _id}, set_published_query)
 
 
 def get_session():
@@ -34,15 +33,15 @@ def get_publish_queue():
     return posts.find({"is_pub": False}).sort('pid', 1)
 
 
-def should_update(id):
-    query = posts.find_one({},sort=[('pid', -1)])
+def should_update(_id):
+    query = posts.find_one({}, sort=[('pid', -1)])
     if query is None:
         return True
     print(query['pid'])
     if len(list(query)) == 0:
         return True
     last_id = query['pid']
-    return id > last_id
+    return _id > last_id
 
 
 def set_published(tid, eid):

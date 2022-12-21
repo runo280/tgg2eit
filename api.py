@@ -1,9 +1,11 @@
+# -*- coding: utf-8 -*-
 from env import *
 from os.path import isfile
 import requests
 import json
 
-def cleanCaption(caption):
+
+def clean_caption(caption):
     return caption.replace(replace_str[0], replace_str[1]).replace(replace_str[2], replace_str[3])
 
 
@@ -13,11 +15,11 @@ def send_message(text, pin=False, view_to_delete=-1,
         f"https://{api_url}/api/{bot_token}/sendMessage",
         data={
             'chat_id': channel_id,
-            'text': cleanCaption(text),
+            'text': clean_caption(text),
             'pin': int(pin),
             'viewCountForDelete': view_to_delete,
             'disable_notification': int(disable_notification),
-            'reply_to_message_id': reply_to_message_id if reply_to_message_id != None else '',
+            'reply_to_message_id': reply_to_message_id if reply_to_message_id is not None else '',
         }
     )
     return json.loads(r.text)
@@ -32,11 +34,11 @@ def send_file(text, file, pin=False, view_to_delete=-1,
         f"https://{api_url}/api/{bot_token}/sendFile",
         data={
             'chat_id': channel_id,
-            'caption': cleanCaption(text),
+            'caption': clean_caption(text),
             'pin': int(pin),
             'viewCountForDelete': view_to_delete,
             'disable_notification': int(disable_notification),
-            'reply_to_message_id': reply_to_message_id if reply_to_message_id != None else '',
+            'reply_to_message_id': reply_to_message_id if reply_to_message_id is not None else '',
         },
         files={
             'file': open(file, 'rb'),
